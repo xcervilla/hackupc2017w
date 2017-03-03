@@ -73,3 +73,10 @@ hackupc/media/
 
 
 staticfiles/
+.coveragerc
+.editorconfig
+.gitattributes
+.idea/
+.pylintrc
+.travis.yml
+venv_*
