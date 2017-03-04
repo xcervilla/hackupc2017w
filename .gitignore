@@ -81,5 +81,6 @@ staticfiles/
 .travis.yml
 venv_*
 
+config/settings/base.py
 hackupc/users/migrations/*
 hackupc/contrib/sites/migrations/*
