@@ -58,8 +58,8 @@ class User(AbstractUser):
         response = r.json()
 
         if User.validations_check(response['validations']):
-            self.name = response['data']['name']
-            self.surname = response['data']['surname']
+            self.name = response['data']['name'].title()
+            self.surname = response['data']['surname'].title()
             self.document_id = response['data']['id_number']
             signature_data = b64decode(response['signature'])
             self.sign_photo = ContentFile(signature_data, self.document_id+'.png')
