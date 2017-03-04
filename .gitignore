@@ -80,3 +80,6 @@ staticfiles/
 .pylintrc
 .travis.yml
 venv_*
+
+hackupc/users/migrations/*
+hackupc/contrib/sites/migrations/*
