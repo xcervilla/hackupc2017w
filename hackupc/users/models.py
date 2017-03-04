@@ -61,20 +61,23 @@ class User(AbstractUser):
         files = {'front': frontal_photo,
                  'back': back_photo}
         r = requests.post(signaturit_url, files=files, headers=headers)
-        response = r.json()
+        try:
+            response = r.json()
 
-        if User.validations_check(response['validations']):
-            document_id = response['data']['id_number']
-            if User.is_repeated_id(document_id):
-                return "repeated"
-            self.document_id = document_id
-            self.name = response['data']['name'].title()
-            self.surname = response['data']['surname'].title()
-            signature_data = b64decode(response['signature'])
-            self.sign_photo = ContentFile(signature_data, self.document_id+'.png')
-            self.is_validated = True
-            self.save()
-            return True
+            if User.validations_check(response['validations']):
+                document_id = response['data']['id_number']
+                if User.is_repeated_id(document_id):
+                    return "repeated"
+                self.document_id = document_id
+                self.name = response['data']['name'].title()
+                self.surname = response['data']['surname'].title()
+                signature_data = b64decode(response['signature'])
+                self.sign_photo = ContentFile(signature_data, self.document_id+'.png')
+                self.is_validated = True
+                self.save()
+                return True
+        except Exception as e:
+            return "not_valid"
         return "not_valid"
 
 

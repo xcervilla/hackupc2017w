@@ -1,16 +1,38 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}{{ user.username }}{% endblock %}
+{% block title %}Verify Identity{% endblock %}
 
 {% block content %}
-  <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <div class="control-group">
-      <div class="controls">
-        <button type="submit" class="btn">Send To Validation</button>
-      </div>
-    </div>
-  </form>
+    {% if error == 'repeated' %}
+        <h3 style="color:red">This ID has been registered previously</h3>
+    {% elif error == 'not_valid' %}
+        <h3 style="color:red">This ID hasn't got enough quality or it isn't valid</h3>
+
+    {% endif %}
+    <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <label for="id_frontal_photo" class="form-control-label  requiredField">
+                    Frontal photo<span class="asteriskField">*</span> </label>
+                <input class="form-control" id="id_frontal_photo" name="frontal_photo" type="file" required="">
+            </div>
+            <div class="col-md-6">
+                <label for="id_back_photo" class="form-control-label  requiredField">
+                    Back photo<span class="asteriskField">*</span> </label>
+                <input class="form-control" id="id_back_photo" name="back_photo" type="file" required="">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px">
+            <div class="col-md-2 col-md-offset-10">
+                <button type="submit" class="btn btn-theme03">Send To Validation</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+
+            </div>
+        </div>
+    </form>
 {% endblock %}

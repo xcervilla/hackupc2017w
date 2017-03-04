@@ -59,17 +59,19 @@ class UserValidateProfileView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(UserValidateProfileView, self).get_context_data(**kwargs)
         context['error'] = False
-        if self.request.GET.get('error', 0) == 1:
-            context['error'] = True
+        if self.request.GET.get('error', 0) != 0:
+            context['error'] = self.request.GET['error']
         context['user'] = User.objects.get(username=self.kwargs.get('username', None))
         return context
 
     def form_valid(self, form):
-        if self.request.user.validate_id(form.cleaned_data['frontal_photo'].read(),
-                                         form.cleaned_data['back_photo'].read()):
+        result = self.request.user.validate_id(form.cleaned_data['frontal_photo'].read(),
+                                               form.cleaned_data['back_photo'].read())
+        if result is True:
             return HttpResponseRedirect(self.get_success_url())
-        return HttpResponseRedirect(reverse('users:validate', args=[self.request.user.username])+'?error=1')
-
+        elif result == 'repeated':
+            return HttpResponseRedirect(reverse('users:validate', args=[self.request.user.username])+'?error=repeated')
+        return HttpResponseRedirect(reverse('users:validate', args=[self.request.user.username])+'?error=not_valid')
 
     def get_success_url(self):
         return self.request.user.get_absolute_url()
