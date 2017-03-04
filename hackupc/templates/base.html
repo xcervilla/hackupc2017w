@@ -79,21 +79,21 @@
 
                 {% endif %}
                 <li class="mt">
-                    <a class="active" href="index.html">
+                    <a id="proposals" href="{%  url 'home' %}">
                         <i class="fa fa-globe"></i>
                         <span>Proposals</span>
                     </a>
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="sub-menu">
-                        <a href="index.html">
+                        <a id="profile" href="index.html">
                             <i class="fa fa-user"></i>
                             <span>My Profile</span>
                         </a>
                     </li>
 
                     <li class="sub-menu">
-                        <a href="index.html">
+                        <a id="my-proposals" href="index.html">
                             <i class="fa fa-tags"></i>
                             <span>My Proposals</span>
                         </a>
