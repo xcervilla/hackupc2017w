@@ -93,7 +93,7 @@
                     </li>
                     {% if request.user.is_validated %}
                         <li class="sub-menu">
-                            <a id="my-proposals" href="index.html">
+                            <a id="my-proposals" href="{% url 'proposals:list' %}">
                                 <i class="fa fa-tags"></i>
                                 <span>My Proposals</span>
                             </a>

@@ -34,3 +34,10 @@
         </div>
     </form>
 {% endblock content %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script type="application/javascript">
+        $('#my-proposals').addClass('active');
+    </script>
+{% endblock javascript %}

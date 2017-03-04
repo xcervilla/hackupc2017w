@@ -4,6 +4,7 @@ import base64
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.template.defaultfilters import register
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,6 +12,7 @@ from django.views.generic import FormView
 
 from .models import User
 from .forms import ValidateProfileForm
+from hackupc.proposal.models import ProposalVote
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -75,3 +77,8 @@ class UserValidateProfileView(LoginRequiredMixin, FormView):
 
     def get_success_url(self):
         return self.request.user.get_absolute_url()
+
+
+@register.filter(name='has_voted')
+def has_voted_proposal(obj, prop_id):
+    return ProposalVote.objects.filter(user=obj, proposal__pk=prop_id).count() == 1

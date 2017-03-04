@@ -12,6 +12,10 @@ class Proposal(TimeStampedModel):
     image = models.ImageField(blank=False)
     created_by = models.ForeignKey(User)
 
+    @property
+    def get_votes(self):
+        return self.proposalvote_set.all().count()
+
 
 class ProposalVote(TimeStampedModel):
     user = models.ForeignKey(User)
