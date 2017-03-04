@@ -26,4 +26,9 @@ urlpatterns = [
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
+    url(
+        regex=r'^(?P<username>[\w.@+-]+)/validate/$',
+        view=views.UserValidateProfileView.as_view(),
+        name='validate'
+    )
 ]

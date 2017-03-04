@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+import base64
 
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import FormView
 
 from .models import User
+from .forms import ValidateProfileForm
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -26,7 +30,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
-    fields = ['name', ]
+    fields = ['name', 'surname']
 
     # we already imported User in the view code above, remember?
     model = User
@@ -46,3 +50,26 @@ class UserListView(LoginRequiredMixin, ListView):
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+
+class UserValidateProfileView(LoginRequiredMixin, FormView):
+    form_class = ValidateProfileForm
+    template_name = 'users/user_validate.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserValidateProfileView, self).get_context_data(**kwargs)
+        context['error'] = False
+        if self.request.GET.get('error', 0) == 1:
+            context['error'] = True
+        context['user'] = User.objects.get(username=self.kwargs.get('username', None))
+        return context
+
+    def form_valid(self, form):
+        if self.request.user.validate_id(form.cleaned_data['frontal_photo'].read(),
+                                         form.cleaned_data['back_photo'].read()):
+            return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(reverse('users:validate', args=[self.request.user.username])+'?error=1')
+
+
+    def get_success_url(self):
+        return self.request.user.get_absolute_url()
