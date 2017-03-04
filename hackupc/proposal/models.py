@@ -9,12 +9,8 @@ from hackupc.users.models import User
 class Proposal(TimeStampedModel):
     title = models.TextField(blank=False, max_length=100)
     description = models.TextField(blank=False, max_length=2000)
-    created_by = models.ForeignKey(User)
-
-
-class ProposalImage(models.Model):
     image = models.ImageField(blank=False)
-    proposal = models.ForeignKey(Proposal)
+    created_by = models.ForeignKey(User)
 
 
 class ProposalVote(TimeStampedModel):

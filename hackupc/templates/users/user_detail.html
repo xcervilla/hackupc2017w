@@ -4,40 +4,82 @@
 {% block title %}User: {{ object.username }}{% endblock %}
 
 {% block content %}
-    <div class="container">
 
-        <div class="row">
-            <div class="col-sm-12">
-
-                <h2>{{ object.email }}</h2>
-
-            </div>
-        </div>
-
-        {% if object == request.user %}
-            <!-- Action buttons -->
-            <div class="row">
-
-                <div class="col-sm-12">
-                    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">Edit My Profile</a>
-                    <!-- Your Stuff: Custom user template urls -->
-                    {% if not object.is_validated %}
-                        <h3 style="color: red">Your profile is not validated!</h3>
-                        <a class="btn btn-success" href="{% url 'users:validate' object.username %}" role="button">Validate Now</a>
-                    {% else %}
-                        {{ object.name }}
-                        {{ object.surname }}
-                        {{ object.document_id }}
-                        <img src="{{ object.sign_photo.url }}">
-                        <h3 style="color: green">Your profile is  validated!</h3>
-                    {% endif %}
+    <div class="row mt">
+        <div class="col-md-12">
+            {% if not object.is_validated %}
+                <div class="col-md-6">
+                    <div class="white-panel pn">
+                        <div class="white-header">
+                            <h5>MY INFO</h5>
+                        </div>
+                        <p><img src="{% static 'img/default_profile.png' %}" class="img-circle" width="50"></p>
+                        <p><b><i class="fa fa-envelope"></i> {{ object.email }} </b></p>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <p class="small mt">MEMBER SINCE</p>
+                                <p>{{ object.member_since }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="white-panel pn">
+                        <div class="white-header">
+                            <h5 style="color: red">YOUR PROFILE IS NOT VERIFIED</h5>
+                        </div>
 
-            </div>
-            <!-- End Action buttons -->
-        {% endif %}
+                        <div class="row">
+                            <p>To collaborate and vote proposals you have to submit your ID for verification. <br>
+                                For every user, the ID must be unique.</p>
+                        </div>
+                        <div class="row">
+                            <a class="btn btn-theme03" href="{% url 'users:validate' object.username %}" role="button">Validate Now</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="white-panel pn" style="height: 100%">
+                    <div class="white-header">
+                        <h5>MY INFO</h5>
+                    </div>
+                    <p><img src="{% static 'img/default_profile.png' %}" class="img-circle" width="50"></p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <b>Name:</b>{{ object.name }}
+                            </div>
+                            <div class="row">
+                                <b>Surname:</b>{{ object.surname }}
+                            </div>
+                            <div class="row">
+                                <b>ID Nº:</b>{{ object.document_id|upper }}
+                            </div>
+                            <div class="row">
+                                <i class="fa fa-envelope"></i>{{ object.email }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="small mt">MEMBER SINCE</p>
+                            <p>{{ object.member_since }}</p>
+                        </div>
+                        <div class="col-md-4" style="padding-right: 0">
+                            <p class="small mt">VOTES ISSUED</p>
+                            <p>57</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 style="color: black">My Sign</h5>
+                            <img src="{{ object.sign_photo.url }}">
 
-
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
+
+
 {% endblock content %}
 

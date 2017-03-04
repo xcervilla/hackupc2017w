@@ -9,7 +9,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-
+from django.utils import timezone
 
 
 @python_2_unicode_compatible
@@ -25,6 +25,8 @@ class User(AbstractUser):
     is_validated = models.BooleanField(default=False)
 
     sign_photo = models.ImageField()
+
+    member_since = models.IntegerField(default=timezone.now().year)
 
     def __str__(self):
         return self.username
@@ -49,6 +51,10 @@ class User(AbstractUser):
             return False
         return True
 
+    @staticmethod
+    def is_repeated_id(document_id):
+        return User.objects.filter(document_id=document_id).count() > 0
+
     def validate_id(self, frontal_photo, back_photo):
         signaturit_url = 'https://api.sandbox.signaturit.com/v3/photoid/validate.json'
         headers = {'Authorization': 'Bearer ' + settings.SIGNATURIT_TOKEN}
@@ -58,14 +64,17 @@ class User(AbstractUser):
         response = r.json()
 
         if User.validations_check(response['validations']):
+            document_id = response['data']['id_number']
+            if User.is_repeated_id(document_id):
+                return "repeated"
+            self.document_id = document_id
             self.name = response['data']['name'].title()
             self.surname = response['data']['surname'].title()
-            self.document_id = response['data']['id_number']
             signature_data = b64decode(response['signature'])
             self.sign_photo = ContentFile(signature_data, self.document_id+'.png')
             self.is_validated = True
             self.save()
             return True
-        return False
+        return "not_valid"
 
 
