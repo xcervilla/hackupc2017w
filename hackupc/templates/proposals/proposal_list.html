@@ -7,7 +7,7 @@
     </div>
     {% for object in object_list %}
         <div class="col-lg-4 col-md-4 col-sm-4 mb">
-            <div class="content-panel pn">
+            <div class="content-panel pn" >
                 <div class="proposal">
                     <div class="prop-bg" style="background-image: url('{{ object.image.url }}')">
                         <div class="col-xs-4 col-xs-offset-8">
@@ -20,10 +20,16 @@
                         </div>
                     </div>
                     <div class="prop-text">
-                        <p>{{ object.description|truncatechars:50 }}</p>
+                        <p>{{ object.description|truncatechars:25 }}</p>
                     </div>
-                    <p class="prop-voters"><i class="fa fa-user"></i> {{ object.get_votes }} Votes</p>
-                    <a role="button" class="btn btn-theme03" href="{% url 'proposals:detail' object.pk %}">See</a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="prop-voters"><i class="fa fa-user"></i> {{ object.get_votes }} Votes</p>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a role="button" class="btn btn-theme03" href="{% url 'proposals:detail' object.pk %}">See</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

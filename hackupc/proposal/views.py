@@ -1,6 +1,8 @@
+import base64
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -69,4 +71,14 @@ def vote_proposal(request, pk):
     ProposalVote.objects.create(proposal=prop, user=user)
     return HttpResponse()
 
+
+def get_pdf_data(request, pk):
+    votes = ProposalVote.objects.filter(proposal__pk=int(pk))
+    ret = {'a': []}
+    for vote in votes:
+        ret['a'].append({'id': vote.user.document_id,
+                         'name': vote.user.name,
+                         'surname': vote.user.surname,
+                         'signature': 'data:image/jpeg;base64,'+base64.b64encode(vote.user.sign_photo.read())})
+    return JsonResponse(ret)
 

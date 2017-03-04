@@ -36,4 +36,9 @@ urlpatterns = [
         view=views.vote_proposal,
         name='vote'
     ),
+    url(
+        regex=r'^getPDFData/(?P<pk>\d+)/$',
+        view=views.get_pdf_data,
+        name='getPDFdata'
+    ),
 ]
