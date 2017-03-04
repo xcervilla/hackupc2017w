@@ -1,1 +1,21 @@
 {% extends "base.html" %}
+{% block content %}
+    <div class="col-lg-4 col-md-4 col-sm-4 mb">
+      <div class="content-panel pn">
+        <div class="proposal">
+          <div class="prop-bg">
+            <div class="col-xs-4 col-xs-offset-8">
+              <button class="btn btn-sm btn-theme03">VOTE</button>
+            </div>
+            <div class="prop-title">
+              <h3>Proposal title</h3>
+            </div>
+          </div>
+          <div class="prop-text">
+            <p>Some text describing the proposal... </p>
+          </div>
+          <p class="prop-voters"><i class="fa fa-user"></i> number of VOTES</p>
+        </div>
+      </div>
+    </div>
+{% endblock %}

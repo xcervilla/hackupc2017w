@@ -1408,6 +1408,57 @@ PANELS CONFIGURATIONS
 	font-size: 12px;
 }
 
+/* Proposal panel */
+.proposal {
+    height: 100%;
+    position: relative;
+}
+.prop-bg {
+    background: url(../img/blog-bg.jpg) no-repeat center top;
+    margin-top: -15px;
+    background-attachment: relative;
+    background-position: center center;
+    min-height: 75%;
+    width: 100%;
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.prop-bg .btn-theme03 {
+    top: 15%;
+    right: 10px;
+    position: absolute;
+    margin-top: 5px;
+}
+
+.prop-bg .prop-title {
+    bottom: 25%;
+    left: 8px;
+    position: absolute;
+    color: #efefef;
+}
+
+.prop-voters {
+    margin-left: 8px;
+    margin-top: 5px;
+}
+
+.prop-voters i {
+    color: #48cfad;
+}
+.prop-text {
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
 /* Calendar Configuration */
 #calendar {
 	color: white;
