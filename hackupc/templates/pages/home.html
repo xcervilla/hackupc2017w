@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+            <a role="button" class="btn btn-theme03" href="{% url 'proposals:create' %}">Add a proposal</a>
+        </div>
+    </div>
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
       <div class="content-panel pn">
         <div class="proposal">

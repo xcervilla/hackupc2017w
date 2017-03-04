@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Edit Proposal{% endblock %}
+
+{% block content %}
+    <h2>Edit proposal - {{ object.title }}</h2>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <label for="id_title" class="form-control-label  requiredField">
+                    Title<span class="asteriskField">*</span> </label>
+                <input class="form-control" id="id_title" maxlength="100" name="title" value="{{ object.title }}" required="">
+            </div>
+            <div class="col-md-6">
+                <label for="id_image" class="form-control-label  requiredField">
+                    Image<span class="asteriskField">*</span> </label>
+                <br>
+                Currently: <a href="{{ object.image.url }}">{{ object.image.name }}</a>
+                <br>
+                <input class="clearablefileinput" id="id_image" name="image" type="file" >
+            </div>
+
+            <div class="col-md-12">
+                <label for="id_description" class="form-control-label  requiredField">
+                    Description<span class="asteriskField">*</span> </label>
+                <textarea class="textarea form-control" cols="40" id="id_description" maxlength="2000" name="description" rows="10" required="">{{ object.description }}</textarea>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px">
+            <div class="col-md-2 col-md-offset-10">
+                <button type="submit" class="btn btn-theme03">Save Changes</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

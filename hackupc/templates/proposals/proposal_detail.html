@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}User: {{ object.username }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <img class="img-responsive" src="{{ object.image.url }}">
+        </div>
+        <div class="col-md-6">
+            <h4><b>{{ object.title }}</b></h4>
+            <p>{{ object.description }}</p>
+        </div>
+    </div>
+    {% if object.created_by == request.user %}
+        <div class="row" style="margin-top: 20px">
+            <div class="col-md-1 ">
+                <a role="button" class="btn btn-theme" href="{% url 'proposals:update' object.pk %}">Edit</a>
+            </div>
+            <div class="col-md-1">
+                <a role="button" class="btn btn-theme04" href="{% url 'proposals:update' object.pk %}">Delete</a>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock content %}
