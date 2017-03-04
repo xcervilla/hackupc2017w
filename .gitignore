@@ -82,5 +82,6 @@ staticfiles/
 venv_*
 
 config/settings/base.py
+hackupc/proposal/migrations/*
 hackupc/users/migrations/*
 hackupc/contrib/sites/migrations/*
