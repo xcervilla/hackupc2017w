@@ -19,3 +19,10 @@
       </div>
     </div>
 {% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script type="application/javascript">
+        $('#proposals').addClass('active');
+    </script>
+{% endblock javascript %}

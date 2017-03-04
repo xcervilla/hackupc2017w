@@ -81,3 +81,7 @@ class User(AbstractUser):
         return "not_valid"
 
 
+    @property
+    def number_votes(self):
+        return self.proposalvote_set.all().count()
+
