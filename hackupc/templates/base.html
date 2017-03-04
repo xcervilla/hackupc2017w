@@ -73,7 +73,7 @@
                 {% elif request.user.is_authenticated %}
                     <h5 class="centered">{{ request.user.email }}</h5>
                     <h5 class="centered" style="color: red">You need to verificate your identity</h5>
-                    <p class="centered"><a href="{% url 'users:validate' request.user.username %}" role="button" class="btn btn-success">Verify My Identity</a></p>
+                    <p class="centered"><a href="{% url 'users:validate' request.user.username %}" role="button" class="btn btn-theme03">Verify My Identity</a></p>
                 {% else %}
                     <p class="centered"><a href="{% url 'account_signup' %}" role="button" class="btn btn-theme03">Sign Up</a></p>
 
@@ -86,7 +86,7 @@
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="sub-menu">
-                        <a id="profile" href="index.html">
+                        <a id="profile" href="{% url 'users:detail' request.user.username %}">
                             <i class="fa fa-user"></i>
                             <span>My Profile</span>
                         </a>

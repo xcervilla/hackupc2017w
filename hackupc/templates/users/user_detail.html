@@ -83,3 +83,10 @@
 
 {% endblock content %}
 
+{% block javascript %}
+    {{ block.super }}
+    <script type="application/javascript">
+        $('#profile').addClass('active');
+    </script>
+{% endblock javascript %}
+
