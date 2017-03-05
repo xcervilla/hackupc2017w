@@ -13,7 +13,7 @@
                 <div class="proposal">
                     <div class="prop-bg" style="background-image: url('{{ object.image.url }}')">
                         <div class="col-xs-4 col-xs-offset-8">
-                            {% if not request.user|has_voted:object.pk %}
+                            {% if not request.user|has_voted:object.pk and request.user.is_validated %}
                                 <button class="btn btn-sm btn-theme03" onclick="voteProposal({{ object.pk }})">VOTE</button>
                             {% endif %}
                         </div>

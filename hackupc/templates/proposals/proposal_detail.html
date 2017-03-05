@@ -31,13 +31,13 @@
             <div class="col-md-1">
                 <button data-toggle="modal" data-target="#myModal" class="btn btn-theme04">Delete</button>
             </div>
-            {% if not request.user|has_voted:object.pk %}
+            {% if not request.user|has_voted:object.pk and request.user.is_validated %}
                 <div class="col-md-2 col-md-offset-8">
                     <button class="btn btn-sm btn-theme03" onclick="voteProposal({{ object.pk }})">VOTE</button>
                 </div>
             {% endif %}
         </div>
-    {% elif not request.user|has_voted:object.pk %}
+    {% elif not request.user|has_voted:object.pk and request.user.is_validated %}
         <div class="row">
             <div class="col-md-2">
                 <button class="btn btn-sm btn-theme03" onclick="voteProposal({{ object.pk }})">VOTE</button>
